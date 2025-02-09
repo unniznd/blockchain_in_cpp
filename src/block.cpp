@@ -2,6 +2,7 @@
 
 #include "block.h"
 #include "utils.h"
+#include "pow.h"
 
 Block::Block(int blocknumber, int timestamp, std::string data, std::string prev_block_hash){
     this->blocknumber = blocknumber;
@@ -11,12 +12,17 @@ Block::Block(int blocknumber, int timestamp, std::string data, std::string prev_
 }
 
 void Block::generate_hash(){
-    std::ostringstream oss;
-    oss << this->blocknumber << this->timestamp << this->data << this->prev_block_hash;
-    std::string result = oss.str();
+    int nonce = pow(this);
+    std::string result = this->get_data(nonce);
     this->hash = sha256(result);
 }
 
 std::string Block::get_hash(){
     return this->hash;
+}
+
+std::string Block::get_data(int nonce){
+    std::ostringstream oss;
+    oss << this->blocknumber << this->timestamp << this->data << this->prev_block_hash << nonce;
+    return oss.str();
 }
