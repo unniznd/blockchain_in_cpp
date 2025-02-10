@@ -9,6 +9,7 @@ class Block{
     std::string data;
     std::string prev_block_hash; 
     std::string hash;
+    int nonce;
 
     
 

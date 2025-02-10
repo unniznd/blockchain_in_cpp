@@ -15,6 +15,7 @@ void Block::generate_hash(){
     int nonce = pow(this);
     std::string result = this->get_data(nonce);
     this->hash = sha256(result);
+    this->nonce = nonce;
 }
 
 std::string Block::get_hash(){
